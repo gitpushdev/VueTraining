@@ -4,4 +4,4 @@ Just recording my vue training
 
 
 # License
-( ͡° ͜ʖ ͡°)
+ (⌐■_■)
