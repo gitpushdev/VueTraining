@@ -7,7 +7,7 @@
       </div>
       <div>
         <label>Is Completed: </label>
-        <input readonly="readonly" type="checkbox" v-bind:checked="InTask.isCompleted" />
+        <input readonly="readonly" type="checkbox" v-model="InTask.isCompleted" />
       </div>
       <button @click="toggleCompletion">{{ buttonText }}</button>
       <button @click="deleteTask" style="margin-left: 10px">Delete</button>
