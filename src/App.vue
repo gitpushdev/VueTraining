@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="app">
-      <img src="./assets/logo.png" style="margin-right: 10px">
+      <img src="./assets/logo.png" style="margin-right: 10px;" height="200px">
       <TaskList></TaskList>
     </div>
   </div>

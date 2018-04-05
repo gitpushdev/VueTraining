@@ -3,7 +3,7 @@
       <h2>Add new task</h2>
       <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
       <hr />
-      <Task v-bind:key="mTask.id" v-for="mTask in tasks" :InTask="mTask" :isReadOnly="true" @onMarkAsCompleted="markAsCompleted(mTask)"></Task>
+      <Task v-bind:key="mTask.id" v-for="mTask in tasks" :InTask="mTask" :isReadOnly="true" @onMarkAsCompleted="markAsCompleted(mTask)" @onTaskDelete="removeTask"></Task>
   </div>
 </template>
 <script>
@@ -30,9 +30,9 @@ export default {
       task.isCompleted = !task.isCompleted;
     },
     loadTasks() {},
-    removeTask(id) {
-      this.tasks.filter(item => {
-        return item.content !== id;
+    removeTask(task) {
+      this.tasks = this.tasks.filter(item => {
+        return item.id !== task.id;
       });
     }
   }

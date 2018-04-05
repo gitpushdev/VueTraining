@@ -3,13 +3,15 @@
   <div v-if="isReadOnly">
      <div>
         <label>Task Content: </label>
-        <span readonly="readonly" type="text">{{ InTask.content }}</span>
+        <span readonly="readonly" type="text" :style="{ color: InTask.isCompleted ? 'red' : 'blue'}">{{ InTask.content }}</span>
       </div>
       <div>
         <label>Is Completed: </label>
         <input readonly="readonly" type="checkbox" v-bind:checked="InTask.isCompleted" />
       </div>
       <button @click="toggleCompletion">{{ buttonText }}</button>
+      <button @click="deleteTask" style="margin-left: 10px">Delete</button>
+      <hr />
   </div>
   <div v-else>
       <input type="text" v-model="content" placeholder="Enter task content"/>
@@ -59,6 +61,9 @@ export default {
       } else {
         alert("Fill in missing information");
       }
+    },
+    deleteTask() {
+      this.$emit("onTaskDelete", this.InTask);
     }
   }
 };
