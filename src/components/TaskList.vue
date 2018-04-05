@@ -1,14 +1,14 @@
 <template>
   <div>
       <h2>Add new task</h2>
-      <Task @onTaskAdded="onAddTask"></Task>
+      <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
       <hr />
-      <task-read-only v-bind:key="mTask.id" v-for="mTask in tasks" :content="mTask.content" :isCompleted="mTask.isCompleted" @onMarkAsCompleted="markAsCompleted(mTask)"></task-read-only>
+      <Task v-bind:key="mTask.id" v-for="mTask in tasks" :InTask="mTask" :isReadOnly="true" @onMarkAsCompleted="markAsCompleted(mTask)"></Task>
   </div>
 </template>
 <script>
-import TaskReadOnly from "./TaskReadOnly";
 import Task from "./Task";
+import { emptyTask } from "../models/TaskModel";
 export default {
   name: "TaskList",
   data() {
@@ -17,14 +17,16 @@ export default {
     };
   },
   components: {
-    TaskReadOnly,
     Task
   },
   methods: {
+    newTask() {
+      return emptyTask();
+    },
     onAddTask(task) {
       this.tasks.push(task);
     },
-    markAsCompleted(task){
+    markAsCompleted(task) {
       task.isCompleted = !task.isCompleted;
     },
     loadTasks() {},
