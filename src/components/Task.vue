@@ -14,9 +14,19 @@
       <hr />
   </div>
   <div v-else>
-      <input type="text" v-model="content" placeholder="Enter task content"/>
-      <input type="checkbox" v-model="isCompleted" />
-      <button @click="addTask">Add Task</button>
+      <div class="input-field s6">
+        <label for="t-content">Task Content</label>
+        <input type="text" v-model="content" id="t-content"/>
+      </div>
+      <div>
+        <label>
+        <input type="checkbox" class="filled-in" checked="checked" v-model="isCompleted" />
+        <span>Is a completed task?</span>
+      </label>
+      </div>
+      <div style="text-align: right">
+        <button style="margin-top: 10px;" class="waves-effect waves-light btn" @click="addTask">Add Task</button>
+      </div>
   </div>
 </div>
 </template>

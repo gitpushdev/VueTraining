@@ -1,10 +1,26 @@
 <template>
-  <div>
-      <h2>Add new task</h2>
-      <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
-      <hr />
-      <Task v-bind:key="mTask.id" v-for="mTask in tasks" :InTask="mTask" :isReadOnly="true" @onMarkAsCompleted="markAsCompleted(mTask)" @onTaskDelete="removeTask"></Task>
-  </div>
+<div>
+  <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
+  <hr style="border:0px; height: 1px; background-color: #AAAAAA"/>
+  <div id="container">
+        <table class="striped">
+          <thead>
+            <tr>
+                <th>Task Content</th>
+                <th>Is Completed</th>
+                <th>Creation Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="mTask in tasks" v-bind:key="mTask.id">
+              <td>{{ mTask.content }}</td>
+              <td>{{ mTask.isCompleted }}</td>
+              <td>{{ mTask.creationDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>  
 </template>
 <script>
 import Task from "./Task";
@@ -39,3 +55,9 @@ export default {
 };
 </script>
 
+<style>
+#container {
+  flex: 1;
+  padding: 10px;
+}
+</style>
