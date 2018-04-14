@@ -35,9 +35,13 @@
         components: {
             Task
         },
+        created() {
+            this.fetchTasks();
+        },
         methods: {
             ...mapActions([
-                'createTask'
+                'createTask',
+                'fetchTasks'
             ]),
             newTask() {
                 return emptyTask();
@@ -45,11 +49,6 @@
             onAddTask(task) {
                 //this.tasks.push(task);
                 this.createTask(task)
-            },
-            markAsCompleted(task) {
-                task.isCompleted = !task.isCompleted;
-            },
-            loadTasks() {
             },
             removeTask(task) {
                 this.tasks = this.tasks.filter(item => {
