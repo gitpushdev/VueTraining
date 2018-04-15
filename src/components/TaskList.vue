@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 v-if="loading">Loading</h1>
         <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
         <hr style="border:0px; height: 1px; background-color: #AAAAAA"/>
         <div id="container">
@@ -30,7 +31,8 @@
     export default {
         name: "TaskList",
         computed: mapState({
-            tasks: state => state.tasksModule.tasks
+            tasks: state => state.tasksModule.tasks,
+            loading: state => state.tasksModule.loading
         }),
         components: {
             Task

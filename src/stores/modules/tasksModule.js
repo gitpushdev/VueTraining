@@ -1,6 +1,7 @@
 export const TasksModule = {
     state: {
-        tasks: []
+        tasks: [],
+        loading: false
     },
     mutations: {
         addTask(state, task) {
@@ -17,17 +18,39 @@ export const TasksModule = {
                     state.tasks.push(item)
                 })
             }
+        },
+        updateLoading(state, val) {
+            state.loading = val;
         }
     },
     actions: {
         createTask({commit}, task) {
-            commit('addTask', task);
+            commit('updateLoading', true);
+            //commit('addTask', task);
+            fetch('http://localhost:3000/todos', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(task)
+            }).then((result) => {
+                if (result.ok) {
+                    return result.json()
+                }
+                return {}
+            }).then(json => {
+                commit('addTask', json)
+                commit('updateLoading', false);
+            }).catch((error) => {
+                commit('updateLoading', false);
+                console.log(error)
+            })
         },
         removeTask({commit}, task) {
             commit('removeTask', task);
         },
         fetchTasks({commit}) {
-            fetch('http://localhost:3000/todos',{
+            fetch('http://localhost:3000/todos', {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
