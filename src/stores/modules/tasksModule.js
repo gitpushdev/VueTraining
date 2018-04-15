@@ -13,6 +13,7 @@ export const TasksModule = {
             })
         },
         addRange(state, tasks) {
+            state.tasks.splice(0, state.tasks.length)
             if (tasks && Array.isArray(tasks)) {
                 tasks.forEach((item) => {
                     state.tasks.push(item)
