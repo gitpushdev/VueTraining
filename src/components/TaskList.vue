@@ -1,8 +1,6 @@
 <template>
     <div>
         <h1 v-if="loading">Loading</h1>
-        <!-- <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task> -->
-        <!-- <hr style="border:0px; height: 1px; background-color: #AAAAAA"/> -->
         <NewTask v-if="shouldOpenModel" @close="shouldOpenModel = false" />
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddTask">add</i></a>
