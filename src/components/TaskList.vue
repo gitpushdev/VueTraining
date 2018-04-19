@@ -1,8 +1,12 @@
 <template>
     <div>
         <h1 v-if="loading">Loading</h1>
-        <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
-        <hr style="border:0px; height: 1px; background-color: #AAAAAA"/>
+        <!-- <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task> -->
+        <!-- <hr style="border:0px; height: 1px; background-color: #AAAAAA"/> -->
+        <NewTask v-if="shouldOpenModel" @close="shouldOpenModel = false" />
+        <div style="position: absolute;right: 10px;bottom: 10px">
+            <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddTask">add</i></a>
+        </div>
         <div id="container">
             <table class="striped">
                 <thead>
@@ -24,46 +28,61 @@
     </div>
 </template>
 <script>
-    import Task from "./Task";
-    import {mapActions, mapState} from 'vuex';
-    import {emptyTask} from "../models/TaskModel";
+import Task from "./Task";
+import NewTask from "./NewTask";
+import { mapActions, mapState } from "vuex";
+import { emptyTask } from "../models/TaskModel";
 
-    export default {
-        name: "TaskList",
-        computed: mapState({
-            tasks: state => state.tasksModule.tasks,
-            loading: state => state.tasksModule.loading
-        }),
-        components: {
-            Task
-        },
-        created() {
-            this.fetchTasks();
-        },
-        methods: {
-            ...mapActions([
-                'createTask',
-                'fetchTasks'
-            ]),
-            newTask() {
-                return emptyTask();
-            },
-            onAddTask(task) {
-                //this.tasks.push(task);
-                this.createTask(task)
-            },
-            removeTask(task) {
-                this.tasks = this.tasks.filter(item => {
-                    return item.id !== task.id;
-                });
-            }
-        }
+export default {
+  name: "TaskList",
+  data() {
+    return {
+      shouldOpenModel: false,
+      isAdding: false
     };
+  },
+  computed: mapState({
+    tasks: state => state.tasksModule.tasks,
+    loading: state => state.tasksModule.loading
+  }),
+  components: {
+    Task,
+    NewTask
+  },
+  created() {
+    this.fetchTasks();
+  },
+  watch: {
+    tasks() {
+      if (this.isAdding) {
+        this.shouldOpenModel = false;
+        this.isAdding = false;
+      }
+    }
+  },
+  methods: {
+    ...mapActions(["createTask", "fetchTasks"]),
+    newTask() {
+      return emptyTask();
+    },
+    onAddTask(task) {
+      //this.tasks.push(task);
+      //this.createTask(task);
+      this.isAdding = true;
+      this.shouldOpenModel = true;
+    },
+    removeTask(task) {
+      this.tasks = this.tasks.filter(item => {
+        return item.id !== task.id;
+      });
+    }
+  }
+};
 </script>
 
 <style>
-    #container {
-        flex: 1;
-        padding: 10px;
-    }
+#container {
+  flex: 1;
+  padding: 10px;
+}
 </style>
