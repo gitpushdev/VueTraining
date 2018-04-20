@@ -1,3 +1,5 @@
+import Router from '../../routes/index';
+
 export const TasksModule = {
     state: {
         tasks: [],
@@ -22,10 +24,10 @@ export const TasksModule = {
         },
         updateLoading(state, val) {
             state.loading = val;
-        }
+        },
     },
     actions: {
-        createTask({commit}, task) {
+        createTask({ commit }, task) {
             commit('updateLoading', true);
             //commit('addTask', task);
             fetch('http://localhost:3000/todos', {
@@ -47,10 +49,10 @@ export const TasksModule = {
                 console.log(error)
             })
         },
-        removeTask({commit}, task) {
+        removeTask({ commit }, task) {
             commit('removeTask', task);
         },
-        fetchTasks({commit}) {
+        fetchTasks({ commit }) {
             fetch('http://localhost:3000/todos', {
                 method: "GET",
                 headers: {
@@ -64,6 +66,9 @@ export const TasksModule = {
             }).then((json) => {
                 commit('addRange', json);
             });
+        },
+        showTaskInfo({ commit }, task) {
+            Router.push({ name: "taskInfo", params: { id: '10', Task: task } });
         }
     },
     getters: {
