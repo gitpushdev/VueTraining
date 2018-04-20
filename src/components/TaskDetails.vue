@@ -5,7 +5,7 @@
       <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
       <span>Is Completed: {{Task.isCompleted}}</span>
       <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
-      <button @click="goBack">Go Back</button>
+      <button @click="goBack" style="cursor: pointer">Go Back</button>
   </div>
 </template>
 <script>

@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="mTask in tasks" v-bind:key="mTask.id" @click="showInfo(mTask)">
+                <tr v-for="mTask in tasks" v-bind:key="mTask.id" style="cursor: pointer" @click="showInfo(mTask)">
                     <td>{{ mTask.content }}</td>
                     <td>{{ mTask.isCompleted }}</td>
                     <td>{{ mTask.creationDate }}</td>
