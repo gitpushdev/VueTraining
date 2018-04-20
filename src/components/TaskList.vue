@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="mTask in tasks" v-bind:key="mTask.id">
+                <tr v-for="mTask in tasks" v-bind:key="mTask.id" @click="showTaskInfo(mTask)">
                     <td>{{ mTask.content }}</td>
                     <td>{{ mTask.isCompleted }}</td>
                     <td>{{ mTask.creationDate }}</td>
@@ -66,6 +66,9 @@ export default {
     onAddTask() {
       this.isAdding = true;
       this.shouldOpenModel = true;
+    },
+    showTaskInfo(task) {
+      this.$router.push({ name: "taskInfo", params: { id: "10", Task: task } });
     },
     removeTask(task) {
       this.tasks = this.tasks.filter(item => {
