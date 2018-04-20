@@ -19,14 +19,6 @@ export default {
     return {
       currentLocation: window.location.pathname
     };
-  },
-  computed: {
-    ViewComponent() {
-      return routes[this.currentLocation] || NotFound;
-    }
-  },
-  render(h) {
-    return h(this.ViewComponent);
   }
 };
 </script>
