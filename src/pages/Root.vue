@@ -1,22 +1,14 @@
 <template>
-  <div>
-    <Toolbar />
-    <div id="root">
-       <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
-          <TaskList></TaskList>
-       </div>
-    </div>
+  <div id="root">
+      <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
+        <TaskList></TaskList>
+      </div>
   </div>
 </template>
 
 <script>
-import TaskList from "./components/TaskList";
-import Toolbar from "./components/Toolbar";
-import NewTaskPage from "./pages/NewTaskPage";
-const routes = {
-  "/new_task": NewTaskPage
-};
-const NotFound = { template: "<p>Page not found</p>" };
+import TaskList from "../components/TaskList";
+import Toolbar from "../components/Toolbar";
 export default {
   name: "root",
   components: {

@@ -63,9 +63,7 @@ export default {
     newTask() {
       return emptyTask();
     },
-    onAddTask(task) {
-      //this.tasks.push(task);
-      //this.createTask(task);
+    onAddTask() {
       this.isAdding = true;
       this.shouldOpenModel = true;
     },

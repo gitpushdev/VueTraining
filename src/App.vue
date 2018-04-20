@@ -2,26 +2,17 @@
   <div>
     <Toolbar />
     <div id="app">
-       <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
-          <TaskList></TaskList>
-       </div>
+       <router-view style="flex: 1"></router-view>
     </div>
   </div>
 </template>
-
 <script>
 import TaskList from "./components/TaskList";
 import Toolbar from "./components/Toolbar";
 export default {
   name: "app",
   components: {
-    TaskList,
     Toolbar
-  },
-  methods: {
-    onAddTask(task) {
-      console.log(task);
-    }
   }
 };
 </script>
