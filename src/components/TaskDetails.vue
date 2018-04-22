@@ -1,28 +1,30 @@
 <template>
-  <div style="padding: 10px">
-      <span style="margin-right: 8px">Task:</span>
-      <span style="color: #C62828">{{ Task.content }}</span>
-      <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
-      <span>Is Completed: {{Task.isCompleted}}</span>
-      <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
-      <button @click="goBack" style="cursor: pointer">Go Back</button>
-  </div>
+    <div style="padding: 10px">
+        <Task :InTask="Task" :isReadOnly="true"></Task>
+        <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
+        <input type="button" @click="goBack" style="cursor: pointer" value="Go Back" />
+    </div>
 </template>
 <script>
-export default {
-  name: "TaskDetails",
-  props: ["Task"],
-  methods: {
-    goBack() {
-      window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
-    }
-  },
-  created() {
-    if (!this.Task) {
-        
-    }
-  }
-};
+    import Task from "./Task";
+
+    export default {
+        name: "TaskDetails",
+        props: ["Task"],
+        components: {
+            Task
+        },
+        methods: {
+            goBack() {
+                window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
+            }
+        },
+        created() {
+            if (!this.Task) {
+
+            }
+        }
+    };
 </script>
 <style scoped>
 

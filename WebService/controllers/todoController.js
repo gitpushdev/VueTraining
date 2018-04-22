@@ -1,14 +1,49 @@
 'use-strict';
 var moment = require('moment');
+var toDoModel = require('../database/schemas/ToDoSchema');
+
+
 exports.allTasks = function (req, res) {
-    res.json([
-        {id: '123321', content: 'Go to bank', creationDate: moment().format("YYYY-MM-DD"), isCompleted: false},
-        {id: '005647', content: 'Recharge phone', creationDate: moment().format("YYYY-MM-DD"), isCompleted: false},
-        {id: '454987', content: 'Go to store', creationDate: moment().format("YYYY-MM-DD"), isCompleted: false},
-        {id: '015687', content: 'Sleep', creationDate: moment().format("YYYY-MM-DD"), isCompleted: false}
-    ])
+    toDoModel.find((error, toDoModels) => {
+        if (error) {
+            res.send({error: error});
+            return;
+        }
+        res.json(toDoModels);
+    });
 }
 
 exports.createTask = function (req, res) {
-    res.json(req.body)
+    var model = new toDoModel();
+    model.content = req.body.content;
+    model.creationDate = moment().format("MMM DD, YYYY");
+    model.isCompleted = req.body.isCompleted;
+
+    model.save((error, toDo) => {
+        if (error) {
+            res.send({error: error});
+            return;
+        }
+        res.json(toDo);
+    })
+}
+
+exports.updateTask = function (req, res) {
+    toDoModel.updateOne({_id: req.body.id}, req.body, (error, updated) => {
+        if (error) {
+            res.send({error: error});
+            return;
+        }
+        res.json(updated);
+    })
+}
+
+exports.deleteTask = function (req, res) {
+    toDoModel.remove({_id: req.query.id}, (error, result) => {
+        if (error) {
+            res.send({error: error});
+            return;
+        }
+        res.json({result: "Success"});
+    })
 }
