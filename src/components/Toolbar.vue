@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="nav-wrapper toolbarStyle">
-            <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Logo</a>
+            <a href="#" @click="navToHome" class="brand-logo"><i class="material-icons">notes</i>To Do</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="sass.html"><i class="material-icons">search</i></a></li>
                 <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
@@ -17,9 +17,9 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Toolbar",
   methods: {
-    ...mapActions(["fetchTasks"]),
-    reloadTasks() {
-      this.fetchTasks();
+    ...mapActions(["navHome"]),
+    navToHome() {
+      this.navHome();
     }
   },
   computed: mapState({

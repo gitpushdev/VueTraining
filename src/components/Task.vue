@@ -2,12 +2,10 @@
     <div>
         <div v-if="isReadOnly">
             <div>
-                <label>Task Content: </label>
-                <span readonly="readonly" type="text" :style="{ color: InTask.isCompleted ? 'red' : 'blue'}">{{ InTask.content }}</span>
+                <h6>Task Content: <span readonly="readonly" type="text" :style="{ color: !InTask.isCompleted ? 'red' : 'green'}">{{ InTask.content }}</span></h6>
             </div>
             <div>
-                <label>Is Completed: </label>
-                <input readonly="readonly" type="checkbox" v-model="InTask.isCompleted"/>
+                <h6>Is Completed: {{InTask.isCompleted ? 'Yes' : 'No'}}</h6>
             </div>
             <input type="button" @click="toggleCompletion" :value="buttonText"/>
             <input type="button" @click="deleteTask" style="margin-left: 10px" value="Delete"/>
@@ -33,55 +31,55 @@
 </template>
 
 <script>
-    import {createTask} from "../models/TaskModel";
-    import {mapActions, mapState} from "vuex";
+import { createTask } from "../models/TaskModel";
+import { mapActions, mapState } from "vuex";
 
-    export default {
-        name: "Task",
-        props: ["InTask", "isReadOnly"],
-        data() {
-            return {
-                content: "",
-                isCompleted: false
-            };
-        },
-        computed: {
-            buttonText: function () {
-                return this.InTask && this.InTask.isCompleted
-                    ? "Mark as In Progress"
-                    : "Mark as Completed";
-            }
-        },
-        methods: {
-            ...mapActions(["updateTask", "deleteTaskFromServer"]),
-            toggleCompletion() {
-                this.InTask.isCompleted = !this.InTask.isCompleted;
-                this.updateTask(this.InTask);
-            },
-            isTaskValid() {
-                var isValid = true;
-                if (this.content.length === 0) {
-                    isValid = false;
-                }
-                return isValid;
-            },
-            addTask() {
-                if (this.isTaskValid()) {
-                    this.$emit(
-                        "onTaskAdded",
-                        createTask(Math.random(), this.content, this.isCompleted)
-                    );
-                    this.content = "";
-                    this.isCompleted = false;
-                } else {
-                    alert("Fill in missing information");
-                }
-            },
-            deleteTask() {
-                //this.$emit("onTaskDelete", this.InTask);
-                this.deleteTaskFromServer(this.InTask);
-            }
-        }
+export default {
+  name: "Task",
+  props: ["InTask", "isReadOnly"],
+  data() {
+    return {
+      content: "",
+      isCompleted: false
     };
+  },
+  computed: {
+    buttonText: function() {
+      return this.InTask && this.InTask.isCompleted
+        ? "Mark as In Progress"
+        : "Mark as Completed";
+    }
+  },
+  methods: {
+    ...mapActions(["updateTask", "deleteTaskFromServer"]),
+    toggleCompletion() {
+      this.InTask.isCompleted = !this.InTask.isCompleted;
+      this.updateTask(this.InTask);
+    },
+    isTaskValid() {
+      var isValid = true;
+      if (this.content.length === 0) {
+        isValid = false;
+      }
+      return isValid;
+    },
+    addTask() {
+      if (this.isTaskValid()) {
+        this.$emit(
+          "onTaskAdded",
+          createTask(Math.random(), this.content, this.isCompleted)
+        );
+        this.content = "";
+        this.isCompleted = false;
+      } else {
+        alert("Fill in missing information");
+      }
+    },
+    deleteTask() {
+      //this.$emit("onTaskDelete", this.InTask);
+      this.deleteTaskFromServer(this.InTask);
+    }
+  }
+};
 </script>
 
