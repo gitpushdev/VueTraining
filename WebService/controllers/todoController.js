@@ -1,27 +1,33 @@
 'use-strict';
 var moment = require('moment');
 var toDoModel = require('../database/schemas/ToDoSchema');
-
+var statusCodes = require('../core/status');
+var taskMapper = require( '../mappers/Tasks');
 
 exports.allTasks = function (req, res) {
     toDoModel.find((error, toDoModels) => {
         if (error) {
-            res.send({error: error});
+            res.send({ error: error });
             return;
         }
-        res.json(toDoModels);
+        res.json(taskMapper.mapTaskArray(toDoModels));
     });
 }
 
 exports.createTask = function (req, res) {
+    if (!isTaskValid(req.body)) {
+        res.status(statusCodes.BadRequest);
+        res.send({})
+        return;
+    }
     var model = new toDoModel();
     model.content = req.body.content;
     model.creationDate = moment().format("MMM DD, YYYY");
     model.isCompleted = req.body.isCompleted;
-
+    model.folderRef = req.body.folderRef;
     model.save((error, toDo) => {
         if (error) {
-            res.send({error: error});
+            res.send({ error: error });
             return;
         }
         res.json(toDo);
@@ -29,9 +35,9 @@ exports.createTask = function (req, res) {
 }
 
 exports.updateTask = function (req, res) {
-    toDoModel.updateOne({_id: req.body.id}, req.body, (error, updated) => {
+    toDoModel.updateOne({ _id: req.body.id }, req.body, (error, updated) => {
         if (error) {
-            res.send({error: error});
+            res.send({ error: error });
             return;
         }
         res.json(updated);
@@ -39,11 +45,21 @@ exports.updateTask = function (req, res) {
 }
 
 exports.deleteTask = function (req, res) {
-    toDoModel.remove({_id: req.query.id}, (error, result) => {
+    toDoModel.remove({ _id: req.query.id }, (error, result) => {
         if (error) {
-            res.send({error: error});
+            res.send({ error: error });
             return;
         }
-        res.json({result: "Success"});
+        res.json({ result: "Success" });
     })
+}
+
+
+
+/**
+ * Check if a task is valid
+ * @param {object} task Task object to check
+ */
+function isTaskValid(task) {
+    return (task.content && task.folderRef)
 }

@@ -82,7 +82,7 @@ export const TasksModule = {
                 var result = [];
                 if (json && Array.isArray(json)) {
                     for (var i = 0; i < json.length; i++) {
-                        var task = createTask(json[i]._id, json[i].content,
+                        var task = createTask(json[i].id, json[i].content,
                             json[i].isCompleted, json[i].creationDate);
                         result.push(task);
                     }
