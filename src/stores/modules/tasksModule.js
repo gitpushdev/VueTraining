@@ -1,6 +1,6 @@
 import Router from '../../routes/index';
-import {createTask} from "../../models/TaskModel";
-
+import { createTask } from "../../models/TaskModel";
+import * as tasksService from "../../network/API/tasks";
 export const TasksModule = {
     state: {
         tasks: [],
@@ -28,7 +28,7 @@ export const TasksModule = {
         },
     },
     actions: {
-        createTask({commit}, task) {
+        createTask({ commit }, task) {
             commit('updateLoading', true);
             //commit('addTask', task);
             fetch('http://localhost:3000/todos', {
@@ -51,7 +51,7 @@ export const TasksModule = {
                 console.log(error)
             })
         },
-        deleteTaskFromServer({commit}, task) {
+        deleteTaskFromServer({ commit }, task) {
             //commit('removeTask', task);
             commit('updateLoading', true);
             fetch('http://localhost:3000/todos?id=' + task.id, {
@@ -67,33 +67,25 @@ export const TasksModule = {
             }).catch((error) => {
             })
         },
-        fetchTasks({commit}) {
-            fetch('http://localhost:3000/todos', {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then((result) => {
-                if (result.ok) {
-                    return result.json()
-                }
-                return []
-            }).then((json) => {
+        async fetchTasks({ commit }) {
+            try {
+                var tasks = await tasksService.fetchTasks('');
                 var result = [];
-                if (json && Array.isArray(json)) {
-                    for (var i = 0; i < json.length; i++) {
-                        var task = createTask(json[i].id, json[i].content,
-                            json[i].isCompleted, json[i].creationDate);
-                        result.push(task);
-                    }
+                if (tasks && Array.isArray(tasks)) {
+                    result = tasks.map(item=>{
+                        return createTask(item.id, item.content,
+                            item.isCompleted, item.creationDate)
+                    })
                 }
                 commit('addRange', result);
-            });
+            } catch (ex) {
+                console.log(ex);
+            }
         },
-        showTaskInfo({commit}, task) {
-            Router.push({name: "taskInfo", params: {id: task.id, Task: task}});
+        showTaskInfo({ commit }, task) {
+            Router.push({ name: "taskInfo", params: { id: task.id, Task: task } });
         },
-        updateTask({commit}, task) {
+        updateTask({ commit }, task) {
             commit('updateLoading', true);
             fetch('http://localhost:3000/todos', {
                 method: "PUT",

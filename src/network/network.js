@@ -1,8 +1,8 @@
-
-function isSuccess(result){
-    if(result.ok && result.status >= 200 & result.status <= 299){
-        return true;
-    }else{
+const baseURL = "http://localhost:3000/";
+function isSuccess(result) {
+    if (result.ok && result.status >= 200 & result.status <= 299) {
+        return result;
+    } else {
         throw Error(result.status + " " + result.statusText);
     }
 }
@@ -14,22 +14,22 @@ function isSuccess(result){
  * @param {function} onFailure Failure callback
  */
 exports.fetchData = (url, onSuccess, onFailure) => {
-    fetch(url, {
+    fetch(baseURL + url, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
         },
     })
-    .then(isSuccess)
-    .then(result => {
-        return result.json();
-    })
-    .then(json => {
-        onSuccess(json);
-    })
-    .catch(error =>{
-        onFailure(error);
-    });
+        .then(isSuccess)
+        .then(result => {
+            return result.json();
+        })
+        .then(json => {
+            onSuccess(json);
+        })
+        .catch(error => {
+            onFailure(error);
+        });
 }
 
 /**
@@ -40,23 +40,23 @@ exports.fetchData = (url, onSuccess, onFailure) => {
  * @param {function} onFailure Failure callback
  */
 exports.postData = (url, body, onSuccess, onFailure) => {
-    fetch(url, {
+    fetch(baseURL + url, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     })
-    .then(isSuccess)
-    .then(result => {
-        return result.json();
-    })
-    .then(json => {
-        onSuccess(json);
-    })
-    .catch(error =>{
-        onFailure(error);
-    });
+        .then(isSuccess)
+        .then(result => {
+            return result.json();
+        })
+        .then(json => {
+            onSuccess(json);
+        })
+        .catch(error => {
+            onFailure(error);
+        });
 }
 
 /**
@@ -66,23 +66,23 @@ exports.postData = (url, body, onSuccess, onFailure) => {
  * @param {function} onFailure Failure callback
  */
 exports.postData = (url, body, onSuccess, onFailure) => {
-    fetch(url, {
+    fetch(baseURL + url, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     })
-    .then(isSuccess)
-    .then(result => {
-        return result.json();
-    })
-    .then(json => {
-        onSuccess(json);
-    })
-    .catch(error =>{
-        onFailure(error);
-    });
+        .then(isSuccess)
+        .then(result => {
+            return result.json();
+        })
+        .then(json => {
+            onSuccess(json);
+        })
+        .catch(error => {
+            onFailure(error);
+        });
 }
 
 /**
@@ -92,21 +92,21 @@ exports.postData = (url, body, onSuccess, onFailure) => {
  * @param {function} onFailure Failure callback
  */
 exports.postData = (url, body, onSuccess, onFailure) => {
-    fetch(url, {
+    fetch(baseURL + url, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
         },
         body: body ? JSON.stringify(body) : {}
     })
-    .then(isSuccess)
-    .then(result => {
-        return result.json();
-    })
-    .then(json => {
-        onSuccess(json);
-    })
-    .catch(error =>{
-        onFailure(error);
-    });
+        .then(isSuccess)
+        .then(result => {
+            return result.json();
+        })
+        .then(json => {
+            onSuccess(json);
+        })
+        .catch(error => {
+            onFailure(error);
+        });
 }

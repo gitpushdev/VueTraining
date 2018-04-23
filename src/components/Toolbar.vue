@@ -17,9 +17,12 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Toolbar",
   methods: {
-    ...mapActions(["navHome"]),
+    ...mapActions(["navHome", 'fetchTasks']),
     navToHome() {
       this.navHome();
+    },
+    reloadTasks() {
+      this.fetchTasks();
     }
   },
   computed: mapState({
