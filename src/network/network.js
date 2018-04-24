@@ -1,4 +1,9 @@
 const baseURL = "http://localhost:3000/";
+
+/**
+ * Check if response falls between 200 and 299
+ * @param {Result} result Server response
+ */
 function isSuccess(result) {
     if (result.ok && result.status >= 200 & result.status <= 299) {
         return result;
