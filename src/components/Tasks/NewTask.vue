@@ -14,7 +14,7 @@
 
           <div class="modal-body">
             <slot name="body">
-             <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
+             <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false" @closeModal="closeModal"></Task>
             </slot>
           </div>
         </div>
@@ -24,7 +24,7 @@
 </template>
 <script>
 import Task from "./Task";
-import { emptyTask } from "../models/TaskModel";
+import { emptyTask } from "../../models/TaskModel";
 import { mapActions, mapState } from "vuex";
 export default {
   components: {

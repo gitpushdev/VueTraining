@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from '../App.vue'
 import Root from '../pages/Root'
 import NotFound from '../components/NotFound'
-import TaskDetails from '../components/TaskDetails'
+import TaskDetails from '../components/Tasks/TaskDetails'
 
 Vue.use(VueRouter);
 

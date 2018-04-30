@@ -28,28 +28,17 @@ export const TasksModule = {
         },
     },
     actions: {
-        createTask({ commit }, task) {
+        async createTask({ commit }, task) {
             commit('updateLoading', true);
             //commit('addTask', task);
-            fetch('http://localhost:3000/todos', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(task)
-            }).then((result) => {
-                if (result.ok) {
-                    return result.json()
-                }
-                return {}
-            }).then(json => {
+            tasksService.postTask(task).then(result => {
                 var task = createTask(json._id, json.content, json.isCompleted, json.creationDate);
                 commit('addTask', task)
                 commit('updateLoading', false);
-            }).catch((error) => {
+            }).catch(error => {
                 commit('updateLoading', false);
                 console.log(error)
-            })
+            });
         },
         deleteTaskFromServer({ commit }, task) {
             //commit('removeTask', task);
@@ -67,12 +56,12 @@ export const TasksModule = {
             }).catch((error) => {
             })
         },
-        async fetchTasks({ commit }) {
+        async fetchTasks({ commit }, folderRef) {
             try {
-                var tasks = await tasksService.fetchTasks('');
+                var tasks = await tasksService.fetchTasks('TOKEN', folderRef);
                 var result = [];
                 if (tasks && Array.isArray(tasks)) {
-                    result = tasks.map(item=>{
+                    result = tasks.map(item => {
                         return createTask(item.id, item.content,
                             item.isCompleted, item.creationDate)
                     })
