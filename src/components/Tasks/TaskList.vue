@@ -49,7 +49,7 @@ export default {
     NewTask
   },
   created() {
-    this.fetchTasks(this.folderRef);
+    this.fetchTasks(this.$route.params.folderId);
   },
   watch: {
     tasks() {

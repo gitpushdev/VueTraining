@@ -30,7 +30,6 @@ export default {
   components: {
     Task
   },
-  created() {},
   methods: {
     ...mapActions(["createTask", "fetchTasks"]),
     newTask() {
@@ -38,6 +37,7 @@ export default {
     },
     onAddTask(task) {
       //this.tasks.push(task);
+      task.folderRef = this.$route.params.folderId
       this.createTask(task);
     },
     closeModal() {

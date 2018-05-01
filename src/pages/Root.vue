@@ -1,8 +1,6 @@
 <template>
   <div id="root">
-      <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
-        <FolderList></FolderList>
-      </div>
+      <FolderList></FolderList>
   </div>
 </template>
 

@@ -18,7 +18,7 @@ app.route('/').get(sendInfo);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.route('/folders/:folderRef/todos')
+app.route('/folders/:folderRef/todos/:taskId*?')
     .get(toDoController.allTasks)
     .post(toDoController.createTask)
     .put(toDoController.updateTask)

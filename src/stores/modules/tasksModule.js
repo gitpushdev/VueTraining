@@ -32,7 +32,7 @@ export const TasksModule = {
             commit('updateLoading', true);
             //commit('addTask', task);
             tasksService.postTask(task).then(result => {
-                var task = createTask(json._id, json.content, json.isCompleted, json.creationDate);
+                var task = createTask(result._id, result.content, result.isCompleted, result.creationDate, result.folderRef);
                 commit('addTask', task)
                 commit('updateLoading', false);
             }).catch(error => {
@@ -63,7 +63,7 @@ export const TasksModule = {
                 if (tasks && Array.isArray(tasks)) {
                     result = tasks.map(item => {
                         return createTask(item.id, item.content,
-                            item.isCompleted, item.creationDate)
+                            item.isCompleted, item.creationDate, item.folderRef)
                     })
                 }
                 commit('addRange', result);
@@ -72,25 +72,16 @@ export const TasksModule = {
             }
         },
         showTaskInfo({ commit }, task) {
-            Router.push({ name: "taskInfo", params: { id: task.id, Task: task } });
+            Router.push({ name: "taskInfo", params: { taskId: task.id, Task: task } });
         },
         updateTask({ commit }, task) {
             commit('updateLoading', true);
-            fetch('http://localhost:3000/todos', {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(task)
-            }).then((result) => {
-                if (result.ok) {
-                    return result.json()
-                }
-                return {}
-            }).then((json) => {
-                if (json.id) {
-                    //commit('updateTask', json);
-                }
+            tasksService.updateTask(task).then(result => {
+                // if (json.id) {
+                //     commit('updateTask', json);
+                // }
+                commit('updateLoading', false);
+            }).catch(error => {
                 commit('updateLoading', false);
             });
         }

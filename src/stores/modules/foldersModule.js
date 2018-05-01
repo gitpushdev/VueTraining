@@ -32,7 +32,7 @@ export const FolderModule = {
             commit('updateLoading', true);
             //commit('addTask', task);
             folderService.createFolder(folder).then(result => {
-                var folder = Folder(json._id, json.title, json.tags, json.creationDate);
+                var folder = Folder(result._id, result.title, result.tags, result.creationDate);
                 commit('addFolder', folder)
                 commit('updateLoading', false);
             }).catch(error => {
@@ -71,7 +71,7 @@ export const FolderModule = {
             }
         },
         showFolderInfo({ commit }, folder) {
-            Router.push({ name: "folderInfo", params: { id: folder.id, Folder: folder } });
+            Router.push({ name: "folderInfo", params: { folderId: folder.id, Folder: folder } });
         }
     },
     getters: {

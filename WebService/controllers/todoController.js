@@ -5,7 +5,11 @@ var statusCodes = require('../core/status');
 var taskMapper = require('../mappers/Tasks');
 
 exports.allTasks = function (req, res) {
-    toDoModel.find({ folderRef: req.params.folderRef }, (error, toDoModels) => {
+    var query = { folderRef: req.params.folderRef }
+    if (req.params.taskId) {
+        query._id = req.params.taskId;
+    }
+    toDoModel.find(query, (error, toDoModels) => {
         if (error) {
             res.send({ error: error });
             return;

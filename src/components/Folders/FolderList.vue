@@ -17,7 +17,7 @@
                 <tbody>
                 <tr v-for="mFolder in folders" v-bind:key="mFolder.id" style="cursor: pointer" @click="showInfo(mFolder)">
                     <td>{{ mFolder.title }}</td>
-                    <td>{{ mFolder.tags }}</td>
+                    <td><span v-for="tag in mFolder.tags" :key="tag" >{{tag}}</span></td>
                     <td>{{ mFolder.creationDate }}</td>
                 </tr>
                 </tbody>
@@ -46,13 +46,24 @@ export default {
   created() {
     this.fetchAllFolders();
   },
+  watch: {
+    folders() {
+      this.closeModal();
+    }
+  },
   methods: {
-    ...mapActions(["fetchFolders"]),
+    ...mapActions(["fetchFolders", "showFolderInfo"]),
     onAddFolder() {
       this.shouldOpenModel = true;
       this.isAdding = true;
     },
-    showInfo(folder) {},
+    closeModal() {
+      this.shouldOpenModel = false;
+      this.isAdding = false;
+    },
+    showInfo(folder) {
+      this.showFolderInfo(folder);
+    },
     fetchAllFolders() {
       this.fetchFolders();
     }
