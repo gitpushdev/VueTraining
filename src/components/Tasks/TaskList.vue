@@ -29,10 +29,11 @@
 import Task from "./Task";
 import NewTask from "./NewTask";
 import { mapActions, mapState } from "vuex";
-import { emptyTask } from "../models/TaskModel";
+import { emptyTask } from "../../models/TaskModel";
 
 export default {
   name: "TaskList",
+  props: ["folderRef"],
   data() {
     return {
       shouldOpenModel: false,
@@ -48,7 +49,7 @@ export default {
     NewTask
   },
   created() {
-    this.fetchTasks();
+    this.fetchTasks(this.$route.params.folderId);
   },
   watch: {
     tasks() {

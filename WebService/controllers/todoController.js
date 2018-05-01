@@ -2,10 +2,14 @@
 var moment = require('moment');
 var toDoModel = require('../database/schemas/ToDoSchema');
 var statusCodes = require('../core/status');
-var taskMapper = require( '../mappers/Tasks');
+var taskMapper = require('../mappers/Tasks');
 
 exports.allTasks = function (req, res) {
-    toDoModel.find((error, toDoModels) => {
+    var query = { folderRef: req.params.folderRef }
+    if (req.params.taskId) {
+        query._id = req.params.taskId;
+    }
+    toDoModel.find(query, (error, toDoModels) => {
         if (error) {
             res.send({ error: error });
             return;
@@ -24,7 +28,7 @@ exports.createTask = function (req, res) {
     model.content = req.body.content;
     model.creationDate = moment().format("MMM DD, YYYY");
     model.isCompleted = req.body.isCompleted;
-    model.folderRef = req.body.folderRef;
+    model.folderRef = req.params.folderRef;
     model.save((error, toDo) => {
         if (error) {
             res.send({ error: error });
@@ -61,5 +65,5 @@ exports.deleteTask = function (req, res) {
  * @param {object} task Task object to check
  */
 function isTaskValid(task) {
-    return (task.content && task.folderRef)
+    return (task.content || false)
 }

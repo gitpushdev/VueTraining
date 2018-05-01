@@ -1,18 +1,16 @@
 <template>
   <div id="root">
-      <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
-        <TaskList></TaskList>
-      </div>
+      <FolderList></FolderList>
   </div>
 </template>
 
 <script>
-import TaskList from "../components/TaskList";
+import FolderList from "../components/Folders/FolderList";
 import Toolbar from "../components/Toolbar";
 export default {
   name: "root",
   components: {
-    TaskList,
+    FolderList,
     Toolbar
   },
   data() {

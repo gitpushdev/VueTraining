@@ -70,7 +70,7 @@ exports.postData = (url, body, onSuccess, onFailure) => {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.postData = (url, body, onSuccess, onFailure) => {
+exports.putData = (url, body, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "PUT",
         headers: {
@@ -96,7 +96,7 @@ exports.postData = (url, body, onSuccess, onFailure) => {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.postData = (url, body, onSuccess, onFailure) => {
+exports.deleteData = (url, body, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "DELETE",
         headers: {

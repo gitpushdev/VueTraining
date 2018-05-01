@@ -22,8 +22,10 @@
                     <span>Is a completed task?</span>
                 </label>
             </div>
-            <div style="text-align: right">
-                <input type="button" style="margin-top: 10px;" class="waves-effect waves-light btn" @click="addTask"
+            <div>
+                <input type="button" style="margin-top: 10px;" class="waves-effect waves-light btn btn-flat" @click="cancel"
+                       value="Cancel"/>
+                <input type="button" style="margin-top: 10px;float: right" class="waves-effect waves-light btn" @click="addTask"
                        value="Add Task"/>
             </div>
         </div>
@@ -31,7 +33,7 @@
 </template>
 
 <script>
-import { createTask } from "../models/TaskModel";
+import { createTask } from "../../models/TaskModel";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -74,6 +76,11 @@ export default {
       } else {
         alert("Fill in missing information");
       }
+    },
+    cancel() {
+      this.$emit("closeModal");
+      this.content = "";
+      this.isCompleted = false;
     },
     deleteTask() {
       //this.$emit("onTaskDelete", this.InTask);

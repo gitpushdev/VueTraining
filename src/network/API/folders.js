@@ -1,18 +1,8 @@
 import * as network from "../network";
 
-export function fetchTasks(authToken, folderRef) {
+export function createFolder(folder) {
     return new Promise((resolve, reject) => {
-        network.fetchData('folders/' + folderRef + '/todos', result => {
-            resolve(result);
-        }, error => {
-            reject(error);
-        });
-    })
-}
-
-export function postTask(task) {
-    return new Promise((resolve, reject) => {
-        network.postData('folders/' + task.folderRef + '/todos', task, result => {
+        network.postData('folders', folder, result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -20,9 +10,19 @@ export function postTask(task) {
     })
 }
 
-export function updateTask(task) {
+export function fetchFolders(token) {
     return new Promise((resolve, reject) => {
-        network.putData('folders/' + task.folderRef + '/todos/' + task.id, task, (result) => {
+        network.fetchData('folders', result => {
+            resolve(result);
+        }, error => {
+            reject(result);
+        });
+    })
+}
+
+export function deleteFolder(folderId) {
+    return new Promise((resolve, reject) => {
+        network.deleteData('folders/' + folderId, {}, result => {
             resolve(result);
         }, error => {
             reject(error);

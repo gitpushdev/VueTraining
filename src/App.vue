@@ -2,12 +2,13 @@
   <div>
     <Toolbar />
     <div id="app">
-       <router-view style="flex: 1"></router-view>
+       <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
+         <router-view style="flex: 1"></router-view>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import TaskList from "./components/TaskList";
 import Toolbar from "./components/Toolbar";
 export default {
   name: "app",

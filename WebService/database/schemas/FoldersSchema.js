@@ -6,5 +6,5 @@ var FolderSchema = mongoose.Schema({
     tags: Array
 });
 
-var folderModel = mongoose.model("ToDo", FolderSchema);
+var folderModel = mongoose.model("Folder", FolderSchema);
 module.exports = folderModel;

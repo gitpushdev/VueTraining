@@ -11,8 +11,8 @@ export const TasksModule = {
             state.tasks.push(task);
         },
         removeTask(state, task) {
-            state.tasks.filter((item) => {
-                item.id === task.id
+            state.tasks = state.tasks.filter((item) => {
+                return item.id !== task.id
             })
         },
         addRange(state, tasks) {
@@ -28,28 +28,17 @@ export const TasksModule = {
         },
     },
     actions: {
-        createTask({ commit }, task) {
+        async createTask({ commit }, task) {
             commit('updateLoading', true);
             //commit('addTask', task);
-            fetch('http://localhost:3000/todos', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(task)
-            }).then((result) => {
-                if (result.ok) {
-                    return result.json()
-                }
-                return {}
-            }).then(json => {
-                var task = createTask(json._id, json.content, json.isCompleted, json.creationDate);
+            tasksService.postTask(task).then(result => {
+                var task = createTask(result._id, result.content, result.isCompleted, result.creationDate, result.folderRef);
                 commit('addTask', task)
                 commit('updateLoading', false);
-            }).catch((error) => {
+            }).catch(error => {
                 commit('updateLoading', false);
                 console.log(error)
-            })
+            });
         },
         deleteTaskFromServer({ commit }, task) {
             //commit('removeTask', task);
@@ -67,14 +56,14 @@ export const TasksModule = {
             }).catch((error) => {
             })
         },
-        async fetchTasks({ commit }) {
+        async fetchTasks({ commit }, folderRef) {
             try {
-                var tasks = await tasksService.fetchTasks('');
+                var tasks = await tasksService.fetchTasks('TOKEN', folderRef);
                 var result = [];
                 if (tasks && Array.isArray(tasks)) {
-                    result = tasks.map(item=>{
+                    result = tasks.map(item => {
                         return createTask(item.id, item.content,
-                            item.isCompleted, item.creationDate)
+                            item.isCompleted, item.creationDate, item.folderRef)
                     })
                 }
                 commit('addRange', result);
@@ -83,25 +72,16 @@ export const TasksModule = {
             }
         },
         showTaskInfo({ commit }, task) {
-            Router.push({ name: "taskInfo", params: { id: task.id, Task: task } });
+            Router.push({ name: "taskInfo", params: { taskId: task.id, Task: task } });
         },
         updateTask({ commit }, task) {
             commit('updateLoading', true);
-            fetch('http://localhost:3000/todos', {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(task)
-            }).then((result) => {
-                if (result.ok) {
-                    return result.json()
-                }
-                return {}
-            }).then((json) => {
-                if (json.id) {
-                    //commit('updateTask', json);
-                }
+            tasksService.updateTask(task).then(result => {
+                // if (json.id) {
+                //     commit('updateTask', json);
+                // }
+                commit('updateLoading', false);
+            }).catch(error => {
                 commit('updateLoading', false);
             });
         }

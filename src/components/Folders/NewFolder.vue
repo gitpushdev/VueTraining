@@ -8,14 +8,17 @@
 
           <div class="modal-header">
             <slot name="header">
-              <h4>Add New Task</h4>
+              <h4>Add New Folder</h4>
             </slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body">
-             <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false"></Task>
-            </slot>
+            <input type="text" v-model="folder.title" placeholder="Title" />
+            <input type="text" v-model="folder.tags" placeholder="Tags" />
+            <div>
+                <input type="button" style="margin-top: 10px;" class="waves-effect waves-light btn btn-flat" @click="closeModal" value="Cancel"/>
+                <input type="button" style="margin-top: 10px;float: right" class="waves-effect waves-light btn" @click="onAddFolder" value="Create Folder"/>
+            </div>
           </div>
         </div>
       </div>
@@ -23,22 +26,18 @@
 </transition>
 </template>
 <script>
-import Task from "./Task";
-import { emptyTask } from "../models/TaskModel";
 import { mapActions, mapState } from "vuex";
+import { emptyFolder } from "../../models/FolderModel";
 export default {
-  components: {
-    Task
+  data() {
+    return {
+      folder: emptyFolder()
+    };
   },
-  created() {},
   methods: {
-    ...mapActions(["createTask", "fetchTasks"]),
-    newTask() {
-      return emptyTask();
-    },
-    onAddTask(task) {
-      //this.tasks.push(task);
-      this.createTask(task);
+    ...mapActions(["createFolder"]),
+    onAddFolder() {
+      this.createFolder(this.folder);
     },
     closeModal() {
       this.$emit("close");
