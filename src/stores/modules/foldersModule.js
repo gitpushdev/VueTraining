@@ -10,9 +10,9 @@ export const FolderModule = {
         addFolder(state, folder) {
             state.folders.push(folder);
         },
-        removeTask(state, folder) {
-            state.folders.filter((item) => {
-                item.id === folder.id
+        removeFolder(state, folder) {
+            state.folders = state.folders.filter((item) => {
+                return item.id !== folder.id
             })
         },
         addRange(state, folders) {
@@ -40,11 +40,11 @@ export const FolderModule = {
                 console.log(error)
             });
         },
-        deleteFolder({ commit }, folder) {
-            //commit('removeTask', task);
+        async deleteFolder({ commit }, folder) {
             commit('updateLoading', true);
-            folderService.deleteFolder(folder.id).then(result => {
+            await folderService.deleteFolder(folder.id).then(() => {
                 commit('updateLoading', false);
+                commit('removeFolder', folder);
             }).catch(error => {
                 commit('updateLoading', false);
             });

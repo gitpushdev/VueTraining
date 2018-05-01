@@ -11,8 +11,8 @@ export const TasksModule = {
             state.tasks.push(task);
         },
         removeTask(state, task) {
-            state.tasks.filter((item) => {
-                item.id === task.id
+            state.tasks = state.tasks.filter((item) => {
+                return item.id !== task.id
             })
         },
         addRange(state, tasks) {

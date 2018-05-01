@@ -13,8 +13,8 @@ export function emptyFolder() {
  * @param {string} title Folder Title
  * @param {array} tags Tags array
  */
-export function Folder(id, title, tags) {
+export function Folder(id, title, tags, creationDate) {
     return {
-        title: title, id: id, tags: tags
+        title: title, id: id, tags: tags, creationDate: creationDate
     }
 }

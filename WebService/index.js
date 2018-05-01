@@ -24,7 +24,7 @@ app.route('/folders/:folderRef/todos/:taskId*?')
     .put(toDoController.updateTask)
     .delete(toDoController.deleteTask);
 
-app.route('/folders')
+app.route('/folders/:folderRef*?')
     .get(foldersController.allFolders)
     .post(foldersController.createFolder)
     .put(foldersController.updateFolder)

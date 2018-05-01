@@ -44,7 +44,7 @@ exports.updateFolder = function (req, res) {
 }
 
 exports.deleteFolder = function (req, res) {
-    folderModel.remove({ _id: req.query.id }, (error, result) => {
+    folderModel.remove({ _id: req.params.folderRef }, (error, result) => {
         if (error) {
             res.send({ error: error });
             return;

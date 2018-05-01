@@ -12,6 +12,7 @@
                     <th>Folder Name</th>
                     <th>Tags</th>
                     <th>Creation Date</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,7 @@
                     <td>{{ mFolder.title }}</td>
                     <td><span v-for="tag in mFolder.tags" :key="tag" >{{tag}}</span></td>
                     <td>{{ mFolder.creationDate }}</td>
+                    <td><button @click="removeFolder(mFolder)" v-on:click.stop><i class="material-icons" style="color: grey">delete</i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -52,7 +54,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchFolders", "showFolderInfo"]),
+    ...mapActions(["fetchFolders", "showFolderInfo", "deleteFolder"]),
     onAddFolder() {
       this.shouldOpenModel = true;
       this.isAdding = true;
@@ -66,11 +68,21 @@ export default {
     },
     fetchAllFolders() {
       this.fetchFolders();
+    },
+    removeFolder(folder) {
+      this.deleteFolder(folder);
     }
   }
 };
 </script>
 <style scoped>
-
+button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
 </style>
 
