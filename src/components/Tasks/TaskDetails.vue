@@ -6,25 +6,37 @@
     </div>
 </template>
 <script>
-    import Task from "./Task";
-
-    export default {
-        name: "TaskDetails",
-        props: ["Task"],
-        components: {
-            Task
-        },
-        methods: {
-            goBack() {
-                window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
-            }
-        },
-        created() {
-            if (!this.Task) {
-
-            }
-        }
+import Task from "./Task";
+import { mapActions, mapState } from "vuex";
+import { emptyTask } from "../../models/TaskModel";
+export default {
+  name: "TaskDetails",
+  data() {
+    return {
+      Task: emptyTask()
     };
+  },
+  components: {
+    Task
+  },
+  methods: {
+    ...mapActions(["fetchTaskFromServer"]),
+    goBack() {
+      window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
+    }
+  },
+  watch: {
+    Task
+  },
+  mounted() {
+    if (!this.Task) {
+      this.fetchTaskFromServer(
+        this.$route.params.folderRef,
+        this.$route.params.taskId
+      );
+    }
+  }
+};
 </script>
 <style scoped>
 
