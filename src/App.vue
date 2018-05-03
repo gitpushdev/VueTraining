@@ -1,19 +1,21 @@
 <template>
   <div>
-    <Toolbar />
     <div id="app">
-       <div class="card-panel" style="flex: 1;margin-left: 8px; margin-right: 8px">
-         <router-view style="flex: 1"></router-view>
+        <SideNav />   
+         <div style="flex: 1;margin-left: 8px; margin-right: 8px">
+         <router-view style="flex: 1;"></router-view>      
       </div>
     </div>
   </div>
 </template>
 <script>
 import Toolbar from "./components/Toolbar";
+import SideNav from "./components/SideNav/Navigation";
 export default {
   name: "app",
   components: {
-    Toolbar
+    Toolbar,
+    SideNav
   }
 };
 </script>
@@ -28,6 +30,7 @@ export default {
   flex: 1;
   justify-content: initial;
   color: #2c3e50;
-  margin-top: 10px;
+  margin-top: 0px;
+  background-color: #ECEFF1
 }
 </style>
