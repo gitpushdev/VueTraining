@@ -5,8 +5,8 @@
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddFolder">add</i></a>
         </div>
-        <div id="container" style="padding: 10px;">
-            <table class="striped">
+        <div id="container" style="padding: 10px;text-align: center">
+            <table class="striped" v-if="folders.length > 0">
                 <thead>
                 <tr>
                     <th style="width: 25%;text-align: center">Folder Name</th>
@@ -26,6 +26,7 @@
                 </tr>
                 </tbody>
             </table>
+            <img v-else src="../../assets/emptyfolder.jpg"/>
         </div>
     </div>
 </template>

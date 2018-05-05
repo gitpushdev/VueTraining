@@ -5,8 +5,8 @@
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddTask">add</i></a>
         </div>
-        <div id="container">
-            <table class="striped">
+        <div id="container" style="text-align: center">
+            <table class="striped" v-if="tasks.length > 0">
                 <thead>
                 <tr>
                     <th style="width: 30%;text-align: center">Task Content</th>
@@ -22,6 +22,7 @@
                 </tr>
                 </tbody>
             </table>
+             <img v-else src="../../assets/emptylist.jpg"/>
         </div>
     </div>
 </template>
