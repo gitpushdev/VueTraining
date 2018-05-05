@@ -8,7 +8,7 @@
 
           <div class="modal-header">
             <slot name="header">
-              <h4>Add New Folder</h4>
+              <h4>New Folder</h4>
             </slot>
           </div>
 

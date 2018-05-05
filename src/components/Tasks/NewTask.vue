@@ -8,7 +8,7 @@
 
           <div class="modal-header">
             <slot name="header">
-              <h4>Add New Task</h4>
+              <h4>New Task</h4>
             </slot>
           </div>
 

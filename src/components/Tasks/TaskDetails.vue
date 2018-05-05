@@ -25,15 +25,24 @@ export default {
       window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
+  computed: mapState({
+    taskList: state => state.tasksModule.tasks
+  }),
   watch: {
-    Task
+    taskList() {
+      this.Task = this.taskList.find(item => {
+        return item.id === this.$route.params.taskId;
+      }) || emptyTask();
+    }
   },
   mounted() {
-    if (!this.Task) {
-      this.fetchTaskFromServer(
-        this.$route.params.folderRef,
-        this.$route.params.taskId
-      );
+    if (this.$route.params.Task.content.length === 0) {
+      this.fetchTaskFromServer({
+        folderRef: this.$route.params.folderId,
+        taskId: this.$route.params.taskId
+      });
+    } else {
+      this.Task = this.$route.params.Task;
     }
   }
 };

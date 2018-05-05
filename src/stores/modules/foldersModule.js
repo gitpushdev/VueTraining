@@ -15,7 +15,7 @@ export const FolderModule = {
                 return item.id !== folder.id
             })
         },
-        addRange(state, folders) {
+        addFolderRange(state, folders) {
             state.folders.splice(0, state.folders.length)
             if (folders && Array.isArray(folders)) {
                 folders.forEach((item) => {
@@ -23,35 +23,35 @@ export const FolderModule = {
                 })
             }
         },
-        updateLoading(state, val) {
+        updateFolderLoading(state, val) {
             state.loading = val;
         },
     },
     actions: {
         async createFolder({ commit }, folder) {
-            commit('updateLoading', true);
+            commit('updateFolderLoading', true);
             //commit('addTask', task);
             folderService.createFolder(folder).then(result => {
                 var folder = Folder(result._id, result.title, result.tags, result.creationDate);
                 commit('addFolder', folder)
-                commit('updateLoading', false);
+                commit('updateFolderLoading', false);
             }).catch(error => {
-                commit('updateLoading', false);
+                commit('updateFolderLoading', false);
                 console.log(error)
             });
         },
         async deleteFolder({ commit }, folder) {
-            commit('updateLoading', true);
+            commit('updateFolderLoading', true);
             await folderService.deleteFolder(folder.id).then(() => {
-                commit('updateLoading', false);
+                commit('updateFolderLoading', false);
                 commit('removeFolder', folder);
             }).catch(error => {
-                commit('updateLoading', false);
+                commit('updateFolderLoading', false);
             });
         },
         async fetchFolders({ commit }) {
             try {
-                commit('updateLoading', false);
+                commit('updateFolderLoading', false);
                 var folders = await folderService.fetchFolders('TOKEN').then(folders => {
                     var result = [];
                     if (folders && Array.isArray(folders)) {
@@ -60,11 +60,11 @@ export const FolderModule = {
                                 item.tags, item.creationDate)
                         })
                     }
-                    commit('addRange', result);
-                    commit('updateLoading', false);
+                    commit('addFolderRange', result);
+                    commit('updateFolderLoading', false);
                 }).catch(error => {
                     console.log(error);
-                    commit('updateLoading', false);
+                    commit('updateFolderLoading', false);
                 });
             } catch (ex) {
                 console.log(ex);
@@ -72,6 +72,9 @@ export const FolderModule = {
         },
         showFolderInfo({ commit }, folder) {
             Router.push({ name: "folderInfo", params: { folderId: folder.id, Folder: folder } });
+        },
+        showFolders({ commit }) {
+            Router.push({ name: "root" });
         }
     },
     getters: {

@@ -85,17 +85,18 @@ export const TasksModule = {
                 commit('updateLoading', false);
             });
         },
-        fetchTaskFromServer({ commit }, folderRef, taskId) {
+        fetchTaskFromServer({ commit }, data) {
             commit('updateLoading', true);
-            console.log("TEST");
-            tasksService.fetchTask('', folderRef, taskId).then(result => {
-                var task = createTask(result.id, result.content, result.creationDate, result.folderRef);
-                console.log(task)
-                Router.currentRoute.params.task = task
-                commit('updateLoading', true);
+            tasksService.fetchTask('', data.folderRef, data.taskId).then(result => {
+                if (result && Array.isArray(result) && result.length > 0) {
+                    var task = createTask(result[0].id, result[0].content, result[0].creationDate, result[0].folderRef);
+                    commit('addRange', [task]);
+                    commit('updateLoading', false);
+                } else {
+                    Router.push('/');
+                }
             }, error => {
-                console.log(error)
-                commit('updateLoading', true);
+                commit('updateLoading', false);
             });
         }
     },

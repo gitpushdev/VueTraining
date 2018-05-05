@@ -3,7 +3,7 @@
     <div class="header">
         <div class="userContainer">
             <img src="./images/user_profile.svg" width="50" height="50" />
-            <span class="userName">Welcome Guest</span>
+            <span class="userName">Guest</span>
         </div>
     </div>
     <div class="folderList">
@@ -27,7 +27,7 @@ export default {
 <style scoped>
 .root {
   height: 100vh;
-  width: 30vh;
+  width: 20vw;
   background-color: #ECEFF1;
   border-right: 1px #c2c2c2 solid;
 }
@@ -57,8 +57,6 @@ export default {
   vertical-align: middle;
 }
 .folderList {
-  padding-left: 15px;
-  padding-right: 15px;
   flex: 1;
   flex-direction: column;
   align-content: center;
