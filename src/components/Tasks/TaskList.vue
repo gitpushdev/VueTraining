@@ -5,7 +5,7 @@
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddTask">add</i></a>
         </div>
-        <div id="container">
+        <div id="container" class="card darken-1">
             <table class="striped">
                 <thead>
                 <tr>

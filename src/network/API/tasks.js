@@ -10,6 +10,16 @@ export function fetchTasks(authToken, folderRef) {
     })
 }
 
+export function fetchTask(authToken, folderRef, taskId){
+    return new Promise((resolve, reject) => {
+        network.fetchData('folders/' + folderRef + '/todos/' + taskId, result => {
+            resolve(result);
+        }, error => {
+            reject(error);
+        });
+    })
+}
+
 export function postTask(task) {
     return new Promise((resolve, reject) => {
         network.postData('folders/' + task.folderRef + '/todos', task, result => {

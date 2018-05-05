@@ -84,6 +84,20 @@ export const TasksModule = {
             }).catch(error => {
                 commit('updateLoading', false);
             });
+        },
+        fetchTaskFromServer({ commit }, data) {
+            commit('updateLoading', true);
+            tasksService.fetchTask('', data.folderRef, data.taskId).then(result => {
+                if (result && Array.isArray(result) && result.length > 0) {
+                    var task = createTask(result[0].id, result[0].content, result[0].creationDate, result[0].folderRef);
+                    commit('addRange', [task]);
+                    commit('updateLoading', false);
+                } else {
+                    Router.push('/');
+                }
+            }, error => {
+                commit('updateLoading', false);
+            });
         }
     },
     getters: {

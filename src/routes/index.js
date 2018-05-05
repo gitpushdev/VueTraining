@@ -5,16 +5,29 @@ import Root from '../pages/Root'
 import NotFound from '../components/NotFound'
 import TaskList from '../components/Tasks/TaskList'
 import TaskDetails from '../components/Tasks/TaskDetails'
+import store from '../stores/store';
+import { createTask, emptyTask } from '../models/TaskModel';
 
 Vue.use(VueRouter);
 
 var routes = [
-    { path: '/', component: Root },
+    { path: '/', name: 'root', component: Root },
     { path: '/notfound', component: NotFound },
-    { path: '/folders/:folderId', name: 'folderInfo', component: TaskList, props: true },
-    { path: 'folders/:folderId/task/:taskId', name: 'taskInfo', component: TaskDetails, props: true }
+    {
+        path: '/folders/:folderId', name: 'folderInfo', component: TaskList, props: true
+    },
+    {
+        path: '/folders/:folderId/task/:taskId', name: 'taskInfo',
+        component: TaskDetails, props: true, beforeEnter: (to, from, next) => {
+            if (!to.params.Task) {
+                to.params.Task = emptyTask();
+            }
+            next();
+        }
+    }
 ]
 
 export default new VueRouter({
-    routes
+    mode: 'history',
+    routes: routes
 })
