@@ -2,7 +2,7 @@
   <div>
     <div id="app">
         <SideNav />   
-         <div style="flex: 1;margin-left: 8px; margin-right: 8px">
+         <div style="flex: 1;margin-left: 8px; margin-right: 8px" class="card darken-1">
          <router-view style="flex: 1;"></router-view>      
       </div>
     </div>
@@ -21,6 +21,13 @@ export default {
 </script>
 
 <style>
+.breadcrumb:before {
+  color: #222222;
+}
+.breadcrumb,
+.breadcrumb:last-child {
+  color: #000000;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,6 +38,6 @@ export default {
   justify-content: initial;
   color: #2c3e50;
   margin-top: 0px;
-  background-color: #ECEFF1
+  background-color: #eceff1;
 }
 </style>

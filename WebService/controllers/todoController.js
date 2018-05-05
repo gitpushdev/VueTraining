@@ -31,6 +31,7 @@ exports.createTask = function (req, res) {
     model.folderRef = req.params.folderRef;
     model.save((error, toDo) => {
         if (error) {
+            res.status(statusCodes.BadRequest);
             res.send({ error: error });
             return;
         }
@@ -41,6 +42,7 @@ exports.createTask = function (req, res) {
 exports.updateTask = function (req, res) {
     toDoModel.updateOne({ _id: req.body.id }, req.body, (error, updated) => {
         if (error) {
+            res.status(statusCodes.BadRequest);
             res.send({ error: error });
             return;
         }
@@ -49,8 +51,9 @@ exports.updateTask = function (req, res) {
 }
 
 exports.deleteTask = function (req, res) {
-    toDoModel.remove({ _id: req.query.id }, (error, result) => {
+    toDoModel.remove({ _id: req.params.taskId, folderRef: req.params.folderRef }, (error, result) => {
         if (error) {
+            res.status(statusCodes.BadRequest);
             res.send({ error: error });
             return;
         }

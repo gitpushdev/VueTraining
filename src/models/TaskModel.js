@@ -8,6 +8,6 @@ export function createTask(id, content, isCompleted, creationDate, folderRef) {
 
 export function emptyTask() {
     return {
-        id: '', content: '', isCompleted: false, creationDate: moment().format("MMM DD, YYYY")
+        id: '', content: '', isCompleted: false, creationDate: moment().format("MMM DD, YYYY"), folderRef: ''
     }
 }

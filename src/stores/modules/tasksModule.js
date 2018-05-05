@@ -40,20 +40,13 @@ export const TasksModule = {
                 console.log(error)
             });
         },
-        deleteTaskFromServer({ commit }, task) {
-            //commit('removeTask', task);
+        async deleteTaskFromServer({ commit }, task) {
             commit('updateLoading', true);
-            fetch('http://localhost:3000/todos?id=' + task.id, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then((result) => {
-                if (result.ok) {
-                    commit('removeTask', task);
-                }
+            tasksService.removeTask(task).then(result => {
+                commit('removeTask', task);
                 commit('updateLoading', false);
-            }).catch((error) => {
+            }).catch(error => {
+                commit('updateLoading', false);
             })
         },
         async fetchTasks({ commit }, folderRef) {

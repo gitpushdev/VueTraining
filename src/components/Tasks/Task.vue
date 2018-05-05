@@ -1,34 +1,21 @@
 <template>
-    <div>
-        <div v-if="isReadOnly">
-            <div>
-                <h6>Task Content: <span readonly="readonly" type="text" :style="{ color: !InTask.isCompleted ? 'red' : 'green'}">{{ InTask.content }}</span></h6>
-            </div>
-            <div>
-                <h6>Is Completed: {{InTask.isCompleted ? 'Yes' : 'No'}}</h6>
-            </div>
-            <input type="button" @click="toggleCompletion" :value="buttonText"/>
-            <input type="button" @click="deleteTask" style="margin-left: 10px" value="Delete"/>
-            <hr/>
+    <div style="padding: 10px">
+        <div>
+            <h6>Task: {{ InTask.content }}</h6>
         </div>
-        <div v-else>
-            <div class="input-field s6">
-                <label for="t-content">Task Content</label>
-                <input type="text" v-model="content" id="t-content"/>
-            </div>
-            <div>
-                <label>
-                    <input type="checkbox" class="filled-in" checked="checked" v-model="isCompleted"/>
-                    <span>Is a completed task?</span>
-                </label>
-            </div>
-            <div>
-                <input type="button" style="margin-top: 10px;" class="waves-effect waves-light btn btn-flat" @click="cancel"
-                       value="Cancel"/>
-                <input type="button" style="margin-top: 10px;float: right" class="waves-effect waves-light btn" @click="addTask"
-                       value="Add Task"/>
-            </div>
+        <div style="margin-bottom: 30px">
+            <h6>
+              Status: <span :style="{ color: !InTask.isCompleted ? 'red' : 'green'}">{{InTask.isCompleted ? 'Completed' : 'Pending'}}</span>
+            </h6>
+            <h6>
+              Created on: {{ InTask.creationDate }}
+            </h6>
         </div>
+         <hr style="background-color: #eaeaea;border: 0px;height: 1px; margin-left: -20px;margin-right: -20px"/>
+       <div style="float: right; display: block; margin-top: 10px">
+          <input type="button" @click="toggleCompletion" :value="buttonText"  class="waves-effect waves-light btn" />
+          <input type="button" @click="deleteTask" style="margin-left: 10px" value="Delete"  class="waves-effect waves-light btn" />
+       </div>
     </div>
 </template>
 
@@ -57,25 +44,6 @@ export default {
     toggleCompletion() {
       this.InTask.isCompleted = !this.InTask.isCompleted;
       this.updateTask(this.InTask);
-    },
-    isTaskValid() {
-      var isValid = true;
-      if (this.content.length === 0) {
-        isValid = false;
-      }
-      return isValid;
-    },
-    addTask() {
-      if (this.isTaskValid()) {
-        this.$emit(
-          "onTaskAdded",
-          createTask(Math.random(), this.content, this.isCompleted)
-        );
-        this.content = "";
-        this.isCompleted = false;
-      } else {
-        alert("Fill in missing information");
-      }
     },
     cancel() {
       this.$emit("closeModal");

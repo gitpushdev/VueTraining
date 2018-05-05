@@ -1,8 +1,8 @@
 <template>
     <div style="padding: 10px">
+        <input type="button" @click="goBack" style="cursor: pointer" value="Back"  class="waves-effect waves-light btn btn-flat" />
+        <hr style="background-color: #eaeaea;border: 0px;height: 1px; margin-left: -10px;margin-right: -10px"/>
         <Task :InTask="Task" :isReadOnly="true"></Task>
-        <hr style="background-color: #eaeaea;border: 0px;height: 1px"/>
-        <input type="button" @click="goBack" style="cursor: pointer" value="Go Back" />
     </div>
 </template>
 <script>
@@ -30,9 +30,14 @@ export default {
   }),
   watch: {
     taskList() {
-      this.Task = this.taskList.find(item => {
+      var task = this.taskList.find(item => {
         return item.id === this.$route.params.taskId;
-      }) || emptyTask();
+      });
+      if (!task) {
+        this.goBack();
+      } else {
+        this.Task = task;
+      }
     }
   },
   mounted() {

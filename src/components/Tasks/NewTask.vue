@@ -14,7 +14,22 @@
 
           <div class="modal-body">
             <slot name="body">
-             <Task @onTaskAdded="onAddTask" :InTask="newTask()" :isReadOnly="false" @closeModal="closeModal"></Task>
+             <div class="input-field s6">
+                <label for="t-content">Task Content</label>
+                <input type="text" v-model="Task.content" id="t-content"/>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" class="filled-in" checked="checked" v-model="Task.isCompleted"/>
+                    <span>Is a completed task?</span>
+                </label>
+            </div>
+            <div>
+                <input type="button" style="margin-top: 10px;" class="waves-effect waves-light btn btn-flat" @click="closeModal"
+                       value="Cancel"/>
+                <input type="button" style="margin-top: 10px;float: right" class="waves-effect waves-light btn" @click="addTask"
+                       value="Add Task"/>
+            </div>
             </slot>
           </div>
         </div>
@@ -30,18 +45,32 @@ export default {
   components: {
     Task
   },
+  data(){
+    return {
+      Task: emptyTask()
+    }
+  },
   methods: {
     ...mapActions(["createTask", "fetchTasks"]),
-    newTask() {
-      return emptyTask();
-    },
-    onAddTask(task) {
-      //this.tasks.push(task);
-      task.folderRef = this.$route.params.folderId
-      this.createTask(task);
-    },
     closeModal() {
       this.$emit("close");
+    },
+    isTaskValid() {
+      var isValid = true;
+      if (this.Task.content.length === 0) {
+        isValid = false;
+      }
+      return isValid;
+    },
+    addTask() {
+      if (this.isTaskValid()) {
+        this.Task.folderRef = this.$route.params.folderId;
+        this.createTask(this.Task);
+        this.content = "";
+        this.isCompleted = false;
+      } else {
+        alert("Fill in missing information");
+      }
     }
   }
 };

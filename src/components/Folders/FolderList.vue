@@ -5,7 +5,7 @@
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddFolder">add</i></a>
         </div>
-        <div id="container" class="card darken-1" style="padding: 10px;">
+        <div id="container" style="padding: 10px;">
             <table class="striped">
                 <thead>
                 <tr>
@@ -19,10 +19,10 @@
                 </thead>
                 <tbody>
                 <tr v-for="mFolder in folders" v-bind:key="mFolder.id" style="cursor: pointer" @click="showInfo(mFolder)">
-                    <td>{{ mFolder.title }}</td>
-                    <td><span v-for="tag in mFolder.tags" :key="tag" >{{tag}}</span></td>
-                    <td>{{ mFolder.creationDate }}</td>
-                    <td><button @click="removeFolder(mFolder)" v-on:click.stop><i class="material-icons" style="color: grey">delete</i></button></td>
+                    <td style="text-align: center">{{ mFolder.title }}</td>
+                    <td style="text-align: center"><div class="chip"><span v-for="tag in mFolder.tags" :key="tag" >{{tag}}</span></div></td>
+                    <td style="text-align: center">{{ mFolder.creationDate }}</td>
+                    <td style="text-align: center"><button @click="removeFolder(mFolder)" v-on:click.stop><i class="material-icons" style="color: grey">delete</i></button></td>
                 </tr>
                 </tbody>
             </table>

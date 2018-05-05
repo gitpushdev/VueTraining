@@ -4,7 +4,7 @@
         <div id="container" style="margin-top: 10px">
             <button class="waves-effect waves-light btn btn-flat" style="width: 100%;" @click="onAddFolder">Create Folder</button>
             <hr />
-            <button type="button" class="waves-effect waves-light btn btn-flat" style="width: 100%" v-bind:key="mFolder.id" v-for="mFolder in folders" @click="showInfo(mFolder)">{{mFolder.title}}</button>
+            <button type="button" class="waves-effect waves-light btn btn-flat" :style="[{'width': '100%'}, selectedFolder == mFolder.id ? {'background-color': '#455a64', 'color': 'white'} : {'background-color': 'transparent', 'color': 'black'}]" v-bind:key="mFolder.id" v-for="mFolder in folders" @click="showInfo(mFolder)">{{mFolder.title}}</button>
         </div>
     </div>
 </template>
@@ -19,18 +19,25 @@ export default {
   created() {
     this.fetchAllFolders();
   },
+  data() {
+    return {
+      selectedFolder: ""
+    };
+  },
   watch: {
     folders() {}
   },
   methods: {
     ...mapActions(["fetchFolders", "showFolderInfo", "showFolders"]),
     showInfo(folder) {
+      this.selectedFolder = folder.id;
       this.showFolderInfo(folder);
     },
     fetchAllFolders() {
       this.fetchFolders();
     },
     onAddFolder() {
+      this.selectedFolder = ''
       this.showFolders();
     }
   }

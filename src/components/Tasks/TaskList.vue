@@ -5,20 +5,20 @@
         <div style="position: absolute;right: 10px;bottom: 10px">
             <a class="btn-floating btn-large waves-effect waves-light red right bottom"><i class="material-icons" @click="onAddTask">add</i></a>
         </div>
-        <div id="container" class="card darken-1">
+        <div id="container">
             <table class="striped">
                 <thead>
                 <tr>
-                    <th>Task Content</th>
-                    <th>Is Completed</th>
-                    <th>Creation Date</th>
+                    <th style="width: 30%;text-align: center">Task Content</th>
+                    <th style="width: 30%;text-align: center">Is Completed</th>
+                    <th style="width: 30%;text-align: center">Creation Date</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="mTask in tasks" v-bind:key="mTask.id" style="cursor: pointer" @click="showInfo(mTask)">
-                    <td>{{ mTask.content }}</td>
-                    <td>{{ mTask.isCompleted }}</td>
-                    <td>{{ mTask.creationDate }}</td>
+                    <td style="width: 30%;text-align: center">{{ mTask.content }}</td>
+                    <td style="width: 30%;text-align: center">{{ mTask.isCompleted }}</td>
+                    <td style="width: 30%;text-align: center">{{ mTask.creationDate }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -56,6 +56,11 @@ export default {
       if (this.isAdding) {
         this.shouldOpenModel = false;
         this.isAdding = false;
+      }
+    },
+    $route: function(newRoute, oldRoute) {
+      if (newRoute.params.folderId !== oldRoute.params.folderId) {
+        this.fetchTasks(this.$route.params.folderId);
       }
     }
   },
