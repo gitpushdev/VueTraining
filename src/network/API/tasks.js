@@ -1,8 +1,8 @@
 import * as network from "../network";
 
-export function fetchTasks(authToken, folderRef) {
+export function fetchTasks(token, folderRef) {
     return new Promise((resolve, reject) => {
-        network.fetchData('folders/' + folderRef + '/todos', result => {
+        network.fetchData(token, 'folders/' + folderRef + '/todos', result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -10,9 +10,9 @@ export function fetchTasks(authToken, folderRef) {
     })
 }
 
-export function fetchTask(authToken, folderRef, taskId) {
+export function fetchTask(token, folderRef, taskId) {
     return new Promise((resolve, reject) => {
-        network.fetchData('folders/' + folderRef + '/todos/' + taskId, result => {
+        network.fetchData(token, 'folders/' + folderRef + '/todos/' + taskId, result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -20,9 +20,9 @@ export function fetchTask(authToken, folderRef, taskId) {
     })
 }
 
-export function postTask(task) {
+export function postTask(token, task) {
     return new Promise((resolve, reject) => {
-        network.postData('folders/' + task.folderRef + '/todos', task, result => {
+        network.postData(token, 'folders/' + task.folderRef + '/todos', task, result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -30,9 +30,9 @@ export function postTask(task) {
     })
 }
 
-export function removeTask(task) {
+export function removeTask(token, task) {
     return new Promise((resolve, reject) => {
-        network.deleteData('folders/' + task.folderRef + '/todos/' + task.id, {}, result => {
+        network.deleteData(token, 'folders/' + task.folderRef + '/todos/' + task.id, {}, result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -40,9 +40,9 @@ export function removeTask(task) {
     })
 }
 
-export function updateTask(task) {
+export function updateTask(token, task) {
     return new Promise((resolve, reject) => {
-        network.putData('folders/' + task.folderRef + '/todos/' + task.id, task, (result) => {
+        network.putData(token, 'folders/' + task.folderRef + '/todos/' + task.id, task, (result) => {
             resolve(result);
         }, error => {
             reject(error);

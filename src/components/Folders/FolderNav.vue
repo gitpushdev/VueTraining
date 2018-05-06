@@ -2,7 +2,7 @@
     <div>
         <h1 v-if="loading">Loading</h1>
         <div id="container" style="margin-top: 10px">
-            <button class="waves-effect waves-light btn btn-flat" style="width: 100%;" @click="onAddFolder">Create Folder</button>
+            <button class="waves-effect waves-light btn btn-flat" style="width: 100%;" @click="onAddFolder">Show Folders</button>
             <hr />
             <button type="button" class="waves-effect waves-light btn btn-flat" :style="[{'width': '100%'}, selectedFolder == mFolder.id ? {'background-color': '#455a64', 'color': 'white'} : {'background-color': 'transparent', 'color': 'black'}]" v-bind:key="mFolder.id" v-for="mFolder in folders" @click="showInfo(mFolder)">{{mFolder.title}}</button>
         </div>
@@ -28,7 +28,11 @@ export default {
     folders() {}
   },
   methods: {
-    ...mapActions(["fetchFolders", "showFolderInfo", "showFolders"]),
+    ...mapActions("foldersModule", [
+      "fetchFolders",
+      "showFolderInfo",
+      "showFolders"
+    ]),
     showInfo(folder) {
       this.selectedFolder = folder.id;
       this.showFolderInfo(folder);
@@ -37,7 +41,7 @@ export default {
       this.fetchFolders();
     },
     onAddFolder() {
-      this.selectedFolder = ''
+      this.selectedFolder = "";
       this.showFolders();
     }
   }
@@ -51,7 +55,7 @@ button:hover {
 hr {
   border: 0px;
   height: 1px;
-  background-color: #aaa;
+  background-color: #c2c2c2;
 }
 </style>
 

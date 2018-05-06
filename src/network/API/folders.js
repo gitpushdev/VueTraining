@@ -1,8 +1,8 @@
 import * as network from "../network";
 
-export function createFolder(folder) {
+export function createFolder(token, folder) {
     return new Promise((resolve, reject) => {
-        network.postData('folders', folder, result => {
+        network.postData(token, 'folders', folder, result => {
             resolve(result);
         }, error => {
             reject(error);
@@ -12,17 +12,17 @@ export function createFolder(folder) {
 
 export function fetchFolders(token) {
     return new Promise((resolve, reject) => {
-        network.fetchData('folders', result => {
+        network.fetchData(token, 'folders', result => {
             resolve(result);
         }, error => {
-            reject(result);
+            reject(error);
         });
     })
 }
 
-export function deleteFolder(folderId) {
+export function deleteFolder(token, folderId) {
     return new Promise((resolve, reject) => {
-        network.deleteData('folders/' + folderId, {}, result => {
+        network.deleteData(token, 'folders/' + folderId, {}, result => {
             resolve(result);
         }, error => {
             reject(error);

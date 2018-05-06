@@ -1,7 +1,10 @@
 import Router from '../../routes/index';
 import { emptyFolder, Folder } from "../../models/FolderModel";
 import * as folderService from "../../network/API/folders";
+import store from '../store';
+
 export const FolderModule = {
+    namespaced: true,
     state: {
         folders: [],
         loading: false
@@ -28,31 +31,30 @@ export const FolderModule = {
         },
     },
     actions: {
-        async createFolder({ commit }, folder) {
+        async createFolder({ commit, rootGetters }, folder) {
             commit('updateFolderLoading', true);
             //commit('addTask', task);
-            folderService.createFolder(folder).then(result => {
+            folderService.createFolder(rootGetters.user.authToken, folder).then(result => {
                 var folder = Folder(result._id, result.title, result.tags, result.creationDate);
                 commit('addFolder', folder)
                 commit('updateFolderLoading', false);
             }).catch(error => {
                 commit('updateFolderLoading', false);
-                console.log(error)
             });
         },
-        async deleteFolder({ commit }, folder) {
+        async deleteFolder({ commit, rootGetters }, folder) {
             commit('updateFolderLoading', true);
-            await folderService.deleteFolder(folder.id).then(() => {
+            await folderService.deleteFolder(rootGetters.user.authToken, folder.id).then(() => {
                 commit('updateFolderLoading', false);
                 commit('removeFolder', folder);
             }).catch(error => {
                 commit('updateFolderLoading', false);
             });
         },
-        async fetchFolders({ commit }) {
+        async fetchFolders({ commit, rootGetters }) {
             try {
                 commit('updateFolderLoading', false);
-                var folders = await folderService.fetchFolders('TOKEN').then(folders => {
+                var folders = await folderService.fetchFolders(rootGetters.user.authToken).then(folders => {
                     var result = [];
                     if (folders && Array.isArray(folders)) {
                         result = folders.map(item => {
@@ -63,11 +65,9 @@ export const FolderModule = {
                     commit('addFolderRange', result);
                     commit('updateFolderLoading', false);
                 }).catch(error => {
-                    console.log(error);
                     commit('updateFolderLoading', false);
                 });
             } catch (ex) {
-                console.log(ex);
             }
         },
         showFolderInfo({ commit }, folder) {
@@ -80,6 +80,6 @@ export const FolderModule = {
     getters: {
         folder(state) {
             return state.folders;
-        },
+        }
     }
 }

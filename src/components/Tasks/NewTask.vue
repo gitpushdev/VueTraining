@@ -40,18 +40,18 @@
 <script>
 import Task from "./Task";
 import { emptyTask } from "../../models/TaskModel";
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 export default {
   components: {
     Task
   },
-  data(){
+  data() {
     return {
       Task: emptyTask()
-    }
+    };
   },
   methods: {
-    ...mapActions(["createTask", "fetchTasks"]),
+    ...mapActions("tasksModule", ["createTask", "fetchTasks"]),
     closeModal() {
       this.$emit("close");
     },
@@ -116,7 +116,9 @@ export default {
 .modal-default-button {
   float: right;
 }
-
+::placeholder {
+  color: #222222;
+}
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled

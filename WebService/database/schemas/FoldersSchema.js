@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var FolderSchema = mongoose.Schema({
     title: String,
     creationDate: String,
-    tags: Array
+    tags: Array,
+    userId: String
 });
 
 var folderModel = mongoose.model("Folder", FolderSchema);

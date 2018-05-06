@@ -12,7 +12,7 @@
             </h6>
         </div>
          <hr style="background-color: #eaeaea;border: 0px;height: 1px; margin-left: -20px;margin-right: -20px"/>
-       <div style="float: right; display: block; margin-top: 10px">
+       <div style="margin-top: 10px">
           <input type="button" @click="toggleCompletion" :value="buttonText"  class="waves-effect waves-light btn" />
           <input type="button" @click="deleteTask" style="margin-left: 10px" value="Delete"  class="waves-effect waves-light btn" />
        </div>
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["updateTask", "deleteTaskFromServer"]),
+    ...mapActions("tasksModule", ["updateTask", "deleteTaskFromServer"]),
     toggleCompletion() {
       this.InTask.isCompleted = !this.InTask.isCompleted;
       this.updateTask(this.InTask);

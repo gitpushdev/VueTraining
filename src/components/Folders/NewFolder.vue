@@ -26,7 +26,7 @@
 </transition>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import { emptyFolder } from "../../models/FolderModel";
 export default {
   data() {
@@ -35,7 +35,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["createFolder"]),
+    ...mapActions("foldersModule", ["createFolder"]),
     onAddFolder() {
       this.createFolder(this.folder);
     },
@@ -73,7 +73,9 @@ export default {
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-
+::placeholder {
+  color: #222222;
+}
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;

@@ -18,11 +18,12 @@ function isSuccess(result) {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.fetchData = (url, onSuccess, onFailure) => {
+exports.fetchData = (authToken, url, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "GET",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
         },
     })
         .then(isSuccess)
@@ -44,11 +45,12 @@ exports.fetchData = (url, onSuccess, onFailure) => {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.postData = (url, body, onSuccess, onFailure) => {
+exports.postData = (authToken, url, body, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
         },
         body: JSON.stringify(body)
     })
@@ -70,11 +72,12 @@ exports.postData = (url, body, onSuccess, onFailure) => {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.putData = (url, body, onSuccess, onFailure) => {
+exports.putData = (authToken, url, body, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "PUT",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
         },
         body: JSON.stringify(body)
     })
@@ -96,11 +99,12 @@ exports.putData = (url, body, onSuccess, onFailure) => {
  * @param {function} onSuccess Success callback
  * @param {function} onFailure Failure callback
  */
-exports.deleteData = (url, body, onSuccess, onFailure) => {
+exports.deleteData = (authToken, url, body, onSuccess, onFailure) => {
     fetch(baseURL + url, {
         method: "DELETE",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
         },
         body: body ? JSON.stringify(body) : {}
     })

@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import Router from '../routes/index';
-import {TasksModule} from './modules/tasksModule';
+import { TasksModule } from './modules/tasksModule';
 import { UserModule } from './modules/userModule';
 import { FolderModule } from './modules/foldersModule';
 
@@ -13,8 +13,13 @@ export default new Vuex.Store({
         foldersModule: FolderModule
     },
     actions: {
-        navHome(){
+        navHome() {
             Router.push('/');
+        }
+    },
+    getters: {
+        user(state) {
+            return state.userModule.loggedInUser;
         }
     }
 });

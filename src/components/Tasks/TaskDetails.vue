@@ -20,7 +20,7 @@ export default {
     Task
   },
   methods: {
-    ...mapActions(["fetchTaskFromServer"]),
+    ...mapActions("tasksModule", ["fetchTaskFromServer"]),
     goBack() {
       window.history.length > 0 ? this.$router.go(-1) : this.$router.push("/");
     }

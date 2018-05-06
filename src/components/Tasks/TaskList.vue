@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["createTask", "fetchTasks", "showTaskInfo"]),
+    ...mapActions("tasksModule", ["createTask", "fetchTasks", "showTaskInfo"]),
     newTask() {
       return emptyTask();
     },

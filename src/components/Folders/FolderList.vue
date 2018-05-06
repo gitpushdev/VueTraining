@@ -57,7 +57,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchFolders", "showFolderInfo", "deleteFolder"]),
+    ...mapActions("foldersModule", [
+      "fetchFolders",
+      "showFolderInfo",
+      "deleteFolder"
+    ]),
     onAddFolder() {
       this.shouldOpenModel = true;
       this.isAdding = true;

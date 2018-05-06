@@ -5,7 +5,7 @@ var statusCodes = require('../core/status');
 var folderMapper = require('../mappers/Folders');
 
 exports.allFolders = function (req, res) {
-    folderModel.find((error, folderModels) => {
+    folderModel.find({ userId: req.decodedToken.userId }, (error, folderModels) => {
         if (error) {
             res.send({ error: error });
             return;
@@ -15,6 +15,7 @@ exports.allFolders = function (req, res) {
 }
 
 exports.createFolder = function (req, res) {
+    req.body.userId = req.decodedToken.userId;
     if (!isFolderValid(req.body)) {
         res.status(statusCodes.BadRequest);
         res.send({})
@@ -24,6 +25,7 @@ exports.createFolder = function (req, res) {
     model.title = req.body.title;
     model.creationDate = moment().format("MMM DD, YYYY");
     model.tags = req.body.tags;
+    model.userId = req.decodedToken.userId;
     model.save((error, folder) => {
         if (error) {
             res.send({ error: error });
@@ -34,6 +36,7 @@ exports.createFolder = function (req, res) {
 }
 
 exports.updateFolder = function (req, res) {
+    req.body.userId = req.decodedToken.userId;
     folderModel.updateOne({ _id: req.body.id }, req.body, (error, updated) => {
         if (error) {
             res.send({ error: error });
@@ -44,13 +47,12 @@ exports.updateFolder = function (req, res) {
 }
 
 exports.deleteFolder = function (req, res) {
-    folderModel.remove({ _id: req.params.folderRef }, (error, result) => {
+    folderModel.remove({ _id: req.params.folderRef, userId: req.decodedToken.userId }, (error, result) => {
         if (error) {
-            res.send({ error: error });
-            return;
+            return res.status(statusCodes.InternalServerError).send({ error: error });
         }
 
-        res.json({ result: "Success" });
+        return res.json({ result: "Success" });
     })
 }
 
@@ -61,5 +63,5 @@ exports.deleteFolder = function (req, res) {
  * @param {object} task Task object to check
  */
 function isFolderValid(folder) {
-    return (folder.title || false)
+    return ((folder.title && folder.userId) || false)
 }
